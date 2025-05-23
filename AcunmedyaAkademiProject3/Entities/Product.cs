@@ -8,5 +8,13 @@
         public string ProductImageUrl { get; set; }
         public int CategoryId { get; set; }
         public Category Category { get; set; }
+
+        public Product()
+        {
+            ProductName = string.Empty;
+            ProductDescription = string.Empty;
+            ProductImageUrl = string.Empty;
+            Category = new Category();
+        }
     }
 }

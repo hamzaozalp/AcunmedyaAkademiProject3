@@ -1,0 +1,41 @@
+﻿@model AcunmedyaAkademiProject3.Models.ContactModel
+
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card p-4 shadow-sm">
+                <h3 class="card-title text-center mb-4">📩 İletişime Geçin</h3>
+
+                @if (TempData["Success"] != null)
+                {
+                    <div class="alert alert-success text-center">
+                        ✅ @TempData["Success"]
+                    </div>
+                }
+
+                <form asp-action="Index" method="post" class="needs-validation" novalidate>
+                    <div class="mb-3">
+                        <label asp-for="Name" class="form-label">Adınız</label>
+                        <input asp-for="Name" class="form-control" id="Name" placeholder="Adınızı giriniz" required>
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Email" class="form-label">E-Posta</label>
+                        <input asp-for="Email" class="form-control" id="Email" placeholder="E-posta adresinizi giriniz" required>
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Message" class="form-label">Mesaj</label>
+                        <textarea asp-for="Message" class="form-control" id="Message" rows="4" placeholder="Mesajınızı yazınız..." required></textarea>
+                        <span asp-validation-for="Message" class="text-danger"></span>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">📨 Mesaj Gönder</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

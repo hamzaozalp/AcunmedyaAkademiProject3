@@ -1,6 +1,7 @@
-﻿using AcunmedyaAkademiProject3.Context;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using AcunmedyaAkademiProject3.Context;
 using AcunmedyaAkademiProject3.Entities;
-using Microsoft.AspNetCore.Mvc;
 
 namespace AcunmedyaAkademiProject3.Areas.Admin.Controllers
 {
@@ -14,48 +15,74 @@ namespace AcunmedyaAkademiProject3.Areas.Admin.Controllers
             _context = context;
         }
 
-        public IActionResult AboutList()
+        public IActionResult Index()
         {
-            var value=_context.Abouts.ToList();
-            return View(value);
+            var abouts = _context.Abouts.ToList();
+            return View(abouts);
         }
 
         [HttpGet]
-        public IActionResult CreateAbout() 
+        public IActionResult Create()
         {
-            return View();
-            
-        }
-        [HttpPost]
-        public IActionResult CreateAbout(About about)
-        {
-            _context.Abouts.Add(about);
-            _context.SaveChanges();
             return View();
         }
 
-        public IActionResult DeleteAbout(int id)
+        [HttpPost]
+        public IActionResult Create(About about)
         {
-            var value = _context.Abouts.Find(id);
-            _context.Abouts.Remove(value);
-            _context.SaveChanges();
-            return View();
+            if (ModelState.IsValid)
+            {
+                _context.Abouts.Add(about);
+                _context.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View(about);
         }
+
         [HttpGet]
-        public IActionResult UpdateAbout(int id)
+        public IActionResult Edit(int id)
         {
-            var value = _context.Abouts.Find(id);
-            return View(value);    
+            var about = _context.Abouts.Find(id);
+            if (about == null)
+            {
+                return NotFound();
+            }
+            return View(about);
         }
-        [HttpPost]
-        public IActionResult UpdateAbout(About about)
-        {
-            _context.Abouts.Update(about);
-            _context.SaveChanges();
-            return View();
 
+        [HttpPost]
+        public IActionResult Edit(About about)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Update(about);
+                _context.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View(about);
+        }
+
+        [HttpGet]
+        public IActionResult Delete(int id)
+        {
+            var about = _context.Abouts.Find(id);
+            if (about == null)
+            {
+                return NotFound();
+            }
+            return View(about);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        public IActionResult DeleteConfirmed(int id)
+        {
+            var about = _context.Abouts.Find(id);
+            if (about != null)
+            {
+                _context.Abouts.Remove(about);
+                _context.SaveChanges();
+            }
+            return RedirectToAction("Index");
         }
     }
-
 }
-

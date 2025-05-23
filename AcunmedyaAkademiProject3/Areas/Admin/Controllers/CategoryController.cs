@@ -1,6 +1,7 @@
-﻿using AcunmedyaAkademiProject3.Context;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using AcunmedyaAkademiProject3.Context;
 using AcunmedyaAkademiProject3.Entities;
-using Microsoft.AspNetCore.Mvc;
 
 namespace AcunmedyaAkademiProject3.Areas.Admin.Controllers
 {
@@ -8,51 +9,80 @@ namespace AcunmedyaAkademiProject3.Areas.Admin.Controllers
     public class CategoryController : Controller
     {
         private readonly ProjectContext _context;
+
         public CategoryController(ProjectContext context)
         {
             _context = context;
         }
-        public IActionResult CategoryList()
+
+        public IActionResult Index()
         {
-            var values = _context.Categories.ToList();
-            return View(values);
+            var categories = _context.Categories.ToList();
+            return View(categories);
         }
 
         [HttpGet]
-        public IActionResult CreateCategory()
+        public IActionResult Create()
         {
             return View();
         }
 
         [HttpPost]
-
-        public IActionResult CreateCategory(Category category)
+        public IActionResult Create(Category category)
         {
-            _context.Categories.Add(category);
-            _context.SaveChanges();
-            return RedirectToAction("CategoryList");
-        }
-
-        public IActionResult DeleteCategory(int id)
-        {
-            var value = _context.Categories.Find(id);
-            _context.Categories.Remove(value);
-            _context.SaveChanges();
-            return RedirectToAction("CategoryList");
+            if (ModelState.IsValid)
+            {
+                _context.Categories.Add(category);
+                _context.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View(category);
         }
 
         [HttpGet]
-        public IActionResult UpdateCategory(int id) 
+        public IActionResult Edit(int id)
         {
-            var value = _context.Categories.Find(id);
-            return View(value);
+            var category = _context.Categories.Find(id);
+            if (category == null)
+            {
+                return NotFound();
+            }
+            return View(category);
         }
+
         [HttpPost]
-        public IActionResult UpdateCategory(Category category)
+        public IActionResult Edit(Category category)
         {
-            _context.Categories.Update(category);
-            _context.SaveChanges();
-            return RedirectToAction("CategoryList");
+            if (ModelState.IsValid)
+            {
+                _context.Update(category);
+                _context.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View(category);
+        }
+
+        [HttpGet]
+        public IActionResult Delete(int id)
+        {
+            var category = _context.Categories.Find(id);
+            if (category == null)
+            {
+                return NotFound();
+            }
+            return View(category);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        public IActionResult DeleteConfirmed(int id)
+        {
+            var category = _context.Categories.Find(id);
+            if (category != null)
+            {
+                _context.Categories.Remove(category);
+                _context.SaveChanges();
+            }
+            return RedirectToAction("Index");
         }
     }
 }
