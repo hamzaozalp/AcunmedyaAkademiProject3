@@ -1,0 +1,38 @@
+@model AcunmedyaAkademiProject3.Entities.Contact
+
+@{
+    ViewData["Title"] = "Mesaj Detayı";
+    Layout = "_AdminLayout";
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="card shadow-sm">
+                <div class="card-header">
+                    <h3 class="card-title">Mesaj Detayı</h3>
+                </div>
+                <div class="card-body">
+                    <dl class="row">
+                        <dt class = "col-sm-3">Ad Soyad:</dt>
+                        <dd class = "col-sm-9">@Model.Name</dd>
+
+                        <dt class = "col-sm-3">E-posta:</dt>
+                        <dd class = "col-sm-9">@Model.Email</dd>
+
+                        <dt class = "col-sm-3">Konu:</dt>
+                        <dd class = "col-sm-9">@Model.Subject</dd>
+
+                        <dt class = "col-sm-3">Mesaj:</dt>
+                        <dd class = "col-sm-9">@Model.Message</dd>
+                    </dl>
+                </div>
+                <div class="card-footer d-flex justify-content-end">
+                    <a asp-area="Admin" asp-controller="Contact" asp-action="Index" class="btn btn-secondary d-flex align-items-center">
+                         <i class="fas fa-arrow-left me-1"></i> Listeye Dön
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> 

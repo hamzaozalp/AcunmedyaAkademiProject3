@@ -12,6 +12,13 @@ namespace AcunmedyaAkademiProject3.Context
             Products = Set<Product>();
             Contacts = Set<Contact>();
             Features = Set<Feature>();
+            Sliders = Set<Slider>();
+            Skills = Set<Skill>();
+            Statistics = Set<Statistic>();
+            References = Set<Reference>();
+            SocialMedias = Set<SocialMedia>();
+            Experiences = Set<Experience>();
+            Educations = Set<Education>();
         }
 
         public DbSet<Category> Categories { get; set; }
@@ -19,5 +26,13 @@ namespace AcunmedyaAkademiProject3.Context
         public DbSet<Product> Products { get; set; }
         public DbSet<Contact> Contacts { get; set; }
         public DbSet<Feature> Features { get; set; }
+        public DbSet<Slider> Sliders { get; set; }
+        public DbSet<Skill> Skills { get; set; }
+        public DbSet<Statistic> Statistics { get; set; }
+        public DbSet<Reference> References { get; set; }
+        public DbSet<SocialMedia> SocialMedias { get; set; }
+        public DbSet<Experience> Experiences { get; set; }
+        public DbSet<Education> Educations { get; set; }
+       
     }
 }

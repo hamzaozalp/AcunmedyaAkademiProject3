@@ -1,0 +1,44 @@
+﻿@model AcunmedyaAkademiProject3.Entities.Slider
+@{
+    Layout = null; // İhtiyacınıza göre _Layout'unuzu burada belirtebilirsiniz.
+}
+
+<link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+<div class="container">
+    <br /><br />
+    <h2>Slider Silme Onayı</h2>
+    <br />
+
+    <h3>Bu slider'ı silmek istediğinizden emin misiniz?</h3>
+    <hr />
+    <div>
+        <h4>Slider Detayları</h4>
+        <dl class="row">
+            <dt class="col-sm-2">
+                Başlık:
+            </dt>
+            <dd class="col-sm-10">
+                @Model.Title
+            </dd>
+            <dt class="col-sm-2">
+                Görsel URL:
+            </dt>
+            <dd class="col-sm-10">
+                @Model.ImageUrl
+            </dd>
+            <dt class="col-sm-2">
+                Açıklama:
+            </dt>
+            <dd class="col-sm-10">
+                @Model.Description
+            </dd>
+        </dl>
+
+        <form asp-action="DeleteConfirmed">
+            <input type="hidden" asp-for="SliderId" /> @* Silinecek slider'ın ID'si *@
+            <input type="submit" value="Silmeyi Onayla" class="btn btn-danger" />
+            <a href="/Admin/Slider" class="btn btn-secondary">İptal</a>
+        </form>
+    </div>
+</div>

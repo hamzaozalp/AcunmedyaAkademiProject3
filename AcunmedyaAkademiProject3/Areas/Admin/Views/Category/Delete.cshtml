@@ -1,0 +1,35 @@
+@model AcunmedyaAkademiProject3.Entities.Category
+
+@{
+    ViewData["Title"] = "Kategori Sil";
+    Layout = "_AdminLayout";
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="card shadow-sm">
+                <div class="card-header">
+                    <h3 class="card-title">Kategoriyi Silmek İstediğinizden Emin Misiniz?</h3>
+                </div>
+                <div class="card-body">
+                    <h5>Kategori Adı: @Model.CategoryName</h5>
+
+                    <form asp-area="Admin" asp-controller="Category" asp-action="Delete" method="post">
+                        <input type="hidden" asp-for="CategoryId" />
+                        @Html.AntiForgeryToken()
+                        
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-3">
+                            <button type="submit" class="btn btn-danger d-flex align-items-center">
+                                <i class="fas fa-trash-alt me-1"></i> Sil
+                            </button>
+                            <a asp-area="Admin" asp-controller="Category" asp-action="Index" class="btn btn-secondary d-flex align-items-center">
+                                <i class="fas fa-arrow-left me-1"></i> İptal
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> 

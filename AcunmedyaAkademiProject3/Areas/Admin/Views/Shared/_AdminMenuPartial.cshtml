@@ -1,0 +1,120 @@
+@*
+    Admin Menü Partial View
+*@
+
+<div class="admin-sidebar" style="background-color: #6f42c1; color: white; min-height: 100vh; padding: 0;">
+    <div class="sidebar-header" style="border-bottom: 1px solid rgba(255,255,255,0.2);">
+        <h3 class="text-center py-3">Admin</h3>
+    </div>
+    <div class="sidebar-menu">
+        <ul class="nav flex-column">
+            <li class="nav-item">
+                <a class="nav-link" asp-area="Admin" asp-controller="Dashboard" asp-action="Index" style="color: white; padding: 12px 15px; border-bottom: 1px solid rgba(255,255,255,0.1);">
+                    Dashboard
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" asp-area="Admin" asp-controller="AdminProfile" asp-action="Index" style="color: white; padding: 12px 15px; border-bottom: 1px solid rgba(255,255,255,0.1);">
+                    Profil Düzenle
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" asp-area="Admin" asp-controller="EgitimHayatim" asp-action="Index" style="color: white; padding: 12px 15px; border-bottom: 1px solid rgba(255,255,255,0.1);">
+                    Eğitim Hayatım
+                </a>
+            </li>
+             <li class="nav-item">
+                <a class="nav-link" asp-area="Admin" asp-controller="Deneyimlerim" asp-action="Index" style="color: white; padding: 12px 15px; border-bottom: 1px solid rgba(255,255,255,0.1);">
+                    Deneyimlerim
+                </a>
+            </li>
+             <li class="nav-item">
+                <a class="nav-link" asp-area="Admin" asp-controller="Yeteneklerim" asp-action="Index" style="color: white; padding: 12px 15px; border-bottom: 1px solid rgba(255,255,255,0.1);">
+                    Yeteneklerim
+                </a>
+            </li>
+             <li class="nav-item">
+                <a class="nav-link" asp-area="Admin" asp-controller="SosyalMedya" asp-action="Index" style="color: white; padding: 12px 15px; border-bottom: 1px solid rgba(255,255,255,0.1);">
+                    Sosyal Medya
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" asp-area="Admin" asp-controller="Referanslarim" asp-action="Index" style="color: white; padding: 12px 15px; border-bottom: 1px solid rgba(255,255,255,0.1);">
+                    Referanslarım
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" asp-area="Admin" asp-controller="Category" asp-action="Index" style="color: white; padding: 12px 15px; border-bottom: 1px solid rgba(255,255,255,0.1);">
+                    Kategoriler
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" asp-area="Admin" asp-controller="Slider" asp-action="Index" style="color: white; padding: 12px 15px; border-bottom: 1px solid rgba(255,255,255,0.1);">
+                    Slider Yönetimi
+                </a>
+            </li>
+             <li class="nav-item">
+                <a class="nav-link" asp-area="Admin" asp-controller="Projelerim" asp-action="Index" style="color: white; padding: 12px 15px; border-bottom: 1px solid rgba(255,255,255,0.1);">
+                    Projelerim
+                </a>
+            </li>
+             <li class="nav-item">
+                <a class="nav-link" asp-area="Admin" asp-controller="Istatistikler" asp-action="Index" style="color: white; padding: 12px 15px; border-bottom: 1px solid rgba(255,255,255,0.1);">
+                    İstatistikler
+                </a>
+            </li>
+             <li class="nav-item">
+                <a class="nav-link" asp-area="Admin" asp-controller="Login" asp-action="ChangePassword" style="color: white; padding: 12px 15px; border-bottom: 1px solid rgba(255,255,255,0.1);">
+                    Şifre Değiştir
+                </a>
+            </li>
+             <li class="nav-item">
+                <a class="nav-link" href="https://localhost:7284/Default/Index" style="color: white; padding: 12px 15px; border-bottom: 1px solid rgba(255,255,255,0.1);">
+                    Siteye Git
+                </a>
+            </li>
+             <li class="nav-item">
+                <a class="nav-link" asp-area="Admin" asp-controller="CikisYap" asp-action="Index" style="color: white; padding: 12px 15px; border-bottom: 1px solid rgba(255,255,255,0.1);">
+                    Çıkış Yap
+                </a>
+            </li>
+             <li class="nav-item">
+                <a class="nav-link" href="#" style="color: white; padding: 12px 15px; border-top: 1px solid rgba(255,255,255,0.1); font-size: smaller;">
+                    Subscribe for newsletter
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<style>
+    .admin-sidebar {
+        background-color: #343a40;
+        color: white;
+        min-height: 100vh;
+        padding: 0;
+    }
+
+    .sidebar-header {
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .sidebar-menu {
+        padding: 1rem 0;
+    }
+
+    .nav-link {
+        color: rgba(255,255,255,0.8);
+        padding: 0.8rem 1.5rem;
+        transition: all 0.3s;
+    }
+
+    .nav-link:hover {
+        color: white;
+        background-color: rgba(255,255,255,0.1);
+    }
+
+    .nav-link i {
+        margin-right: 10px;
+    }
+</style> 

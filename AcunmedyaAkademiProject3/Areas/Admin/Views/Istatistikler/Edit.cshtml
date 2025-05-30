@@ -1,0 +1,49 @@
+@model AcunmedyaAkademiProject3.Entities.Statistic
+
+@{
+    ViewData["Title"] = "İstatistik Düzenle";
+    Layout = "_AdminLayout";
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="card shadow-sm">
+                <div class="card-header">
+                    <h3 class="card-title">İstatistik Düzenle</h3>
+                </div>
+                <div class="card-body">
+                    <form asp-area="Admin" asp-controller="Istatistikler" asp-action="Edit" method="post">
+                        <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+                        <input type="hidden" asp-for="StatisticId" />
+
+                        <div class="mb-3">
+                            <label asp-for="Title" class="form-label">Başlık</label>
+                            <input asp-for="Title" class="form-control" />
+                            <span asp-validation-for="Title" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Value" class="form-label">Değer</label>
+                            <input asp-for="Value" class="form-control" type="number" />
+                            <span asp-validation-for="Value" class="text-danger"></span>
+                        </div>
+
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <button type="submit" class="btn btn-primary d-flex align-items-center">
+                                <i class="fas fa-save me-1"></i> Kaydet
+                            </button>
+                            <a asp-area="Admin" asp-controller="Istatistikler" asp-action="Index" class="btn btn-secondary d-flex align-items-center">
+                                <i class="fas fa-arrow-left me-1"></i> Listeye Dön
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+} 

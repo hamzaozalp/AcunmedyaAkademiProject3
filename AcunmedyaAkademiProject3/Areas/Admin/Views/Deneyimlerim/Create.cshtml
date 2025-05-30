@@ -1,0 +1,66 @@
+@model AcunmedyaAkademiProject3.Entities.Experience
+
+@{
+    ViewData["Title"] = "Yeni Deneyim Ekle";
+    Layout = "_AdminLayout";
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="card shadow-sm">
+                <div class="card-header">
+                    <h3 class="card-title">Yeni Deneyim Ekle</h3>
+                </div>
+                <div class="card-body">
+                    <form asp-area="Admin" asp-controller="Deneyimlerim" asp-action="Create" method="post">
+                        <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+
+                        <div class="mb-3">
+                            <label asp-for="Title" class="form-label">İş Unvanı</label>
+                            <input asp-for="Title" class="form-control" />
+                            <span asp-validation-for="Title" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="CompanyName" class="form-label">Şirket Adı</label>
+                            <input asp-for="CompanyName" class="form-control" />
+                            <span asp-validation-for="CompanyName" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="StartDate" class="form-label">Başlangıç Tarihi</label>
+                            <input asp-for="StartDate" class="form-control" type="text" placeholder="Ay Yıl (Örn: Mart 2020)" />
+                            <span asp-validation-for="StartDate" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="EndDate" class="form-label">Bitiş Tarihi (Devam Ediyorsa Boş Bırakın)</label>
+                            <input asp-for="EndDate" class="form-control" type="text" placeholder="Ay Yıl (Örn: Mart 2022) veya Devam Ediyor" />
+                            <span asp-validation-for="EndDate" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Description" class="form-label">Açıklama</label>
+                            <textarea asp-for="Description" class="form-control" rows="3"></textarea>
+                            <span asp-validation-for="Description" class="text-danger"></span>
+                        </div>
+
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <button type="submit" class="btn btn-primary d-flex align-items-center">
+                                <i class="fas fa-save me-1"></i> Kaydet
+                            </button>
+                            <a asp-area="Admin" asp-controller="Deneyimlerim" asp-action="Index" class="btn btn-secondary d-flex align-items-center">
+                                <i class="fas fa-arrow-left me-1"></i> Listeye Dön
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+} 

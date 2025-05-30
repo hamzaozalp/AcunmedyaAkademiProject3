@@ -1,0 +1,55 @@
+@model AcunmedyaAkademiProject3.Entities.Skill
+
+@{
+    ViewData["Title"] = "Yetenek Düzenle";
+    Layout = "_AdminLayout";
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="card shadow-sm">
+                <div class="card-header">
+                    <h3 class="card-title">Yetenek Düzenle</h3>
+                </div>
+                <div class="card-body">
+                    <form asp-area="Admin" asp-controller="Yeteneklerim" asp-action="Edit" method="post">
+                        <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+                        <input type="hidden" asp-for="SkillId" />
+
+                        <div class="mb-3">
+                            <label asp-for="Name" class="form-label">Adı</label>
+                            <input asp-for="Name" class="form-control" />
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Value" class="form-label">Seviye (%)</label>
+                            <input asp-for="Value" class="form-control" type="number" min="0" max="100" />
+                            <span asp-validation-for="Value" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Duration" class="form-label">Çalışma Süresi</label>
+                            <input asp-for="Duration" class="form-control" />
+                            <span asp-validation-for="Duration" class="text-danger"></span>
+                        </div>
+
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <button type="submit" class="btn btn-primary d-flex align-items-center">
+                                <i class="fas fa-save me-1"></i> Kaydet
+                            </button>
+                            <a asp-area="Admin" asp-controller="Yeteneklerim" asp-action="Index" class="btn btn-secondary d-flex align-items-center">
+                                <i class="fas fa-arrow-left me-1"></i> Listeye Dön
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+} 

@@ -640,6 +640,16 @@
         <!-- Contact Section -->
         <section id="contact" class="contact section">
 
+            @if (TempData["SuccessMessage"] != null)
+            {
+                <div class="container">
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        @TempData["SuccessMessage"]
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                </div>
+            }
+
             <!-- Section Title -->
             <div class="container section-title" data-aos="fade-up">
                 <h2>İletişim</h2>

@@ -2,6 +2,8 @@
 using Microsoft.EntityFrameworkCore;
 using AcunmedyaAkademiProject3.Context;
 using AcunmedyaAkademiProject3.Entities;
+using System.Threading.Tasks;
+using System.Linq;
 
 namespace AcunmedyaAkademiProject3.Areas.Admin.Controllers
 {
@@ -15,34 +17,39 @@ namespace AcunmedyaAkademiProject3.Areas.Admin.Controllers
             _context = context;
         }
 
-        public IActionResult Index()
+        // GET: Admin/Category
+        public async Task<IActionResult> Index()
         {
-            var categories = _context.Categories.ToList();
+            var categories = await _context.Categories.ToListAsync();
             return View(categories);
         }
 
+        // GET: Admin/Category/Create
         [HttpGet]
         public IActionResult Create()
         {
             return View();
         }
 
+        // POST: Admin/Category/Create
         [HttpPost]
-        public IActionResult Create(Category category)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create([Bind("CategoryId,CategoryName")] Category category)
         {
             if (ModelState.IsValid)
             {
                 _context.Categories.Add(category);
-                _context.SaveChanges();
-                return RedirectToAction("Index");
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
             }
             return View(category);
         }
 
+        // GET: Admin/Category/Edit/5
         [HttpGet]
-        public IActionResult Edit(int id)
+        public async Task<IActionResult> Edit(int id)
         {
-            var category = _context.Categories.Find(id);
+            var category = await _context.Categories.FindAsync(id);
             if (category == null)
             {
                 return NotFound();
@@ -50,39 +57,56 @@ namespace AcunmedyaAkademiProject3.Areas.Admin.Controllers
             return View(category);
         }
 
+        // POST: Admin/Category/Edit/5
         [HttpPost]
-        public IActionResult Edit(Category category)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, [Bind("CategoryId,CategoryName")] Category category)
         {
+            if (id != category.CategoryId)
+            {
+                return NotFound();
+            }
+
             if (ModelState.IsValid)
             {
-                _context.Update(category);
-                _context.SaveChanges();
-                return RedirectToAction("Index");
+                try
+                {
+                    _context.Update(category);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!CategoryExists(category.CategoryId))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Index));
             }
             return View(category);
         }
 
-        [HttpGet]
-        public IActionResult Delete(int id)
-        {
-            var category = _context.Categories.Find(id);
-            if (category == null)
-            {
-                return NotFound();
-            }
-            return View(category);
-        }
-
+        // POST: Admin/Category/Delete/5
         [HttpPost, ActionName("Delete")]
-        public IActionResult DeleteConfirmed(int id)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var category = _context.Categories.Find(id);
+            var category = await _context.Categories.FindAsync(id);
             if (category != null)
             {
                 _context.Categories.Remove(category);
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
             }
-            return RedirectToAction("Index");
+            return RedirectToAction(nameof(Index));
+        }
+
+        private bool CategoryExists(int id)
+        {
+            return _context.Categories.Any(e => e.CategoryId == id);
         }
     }
 }

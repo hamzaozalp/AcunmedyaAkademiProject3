@@ -1,0 +1,55 @@
+@model AcunmedyaAkademiProject3.Entities.SocialMedia
+
+@{
+    ViewData["Title"] = "Sosyal Medya Hesabı Düzenle";
+    Layout = "_AdminLayout";
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="card shadow-sm">
+                <div class="card-header">
+                    <h3 class="card-title">Sosyal Medya Hesabı Düzenlestik Düzenle</h3>
+                </div>
+                <div class="card-body">
+                    <form asp-area="Admin" asp-controller="SosyalMedya" asp-action="Edit" method="post">
+                        <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+                        <input type="hidden" asp-for="SocialMediaId" />
+
+                         <div class="mb-3">
+                            <label asp-for="Icon" class="form-label">Simge (Örn: fab fa-twitter)</label>
+                            <input asp-for="Icon" class="form-control" />
+                            <span asp-validation-for="Icon" class="text-danger"></span>
+                        </div>
+
+                         <div class="mb-3">
+                            <label asp-for="Username" class="form-label">Kullanıcı Adı</label>
+                            <input asp-for="Username" class="form-control" />
+                            <span asp-validation-for="Username" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Url" class="form-label">Link (URL)</label>
+                            <input asp-for="Url" class="form-control" />
+                            <span asp-validation-for="Url" class="text-danger"></span>
+                        </div>
+
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <button type="submit" class="btn btn-primary d-flex align-items-center">
+                                <i class="fas fa-save me-1"></i> Kaydet
+                            </button>
+                            <a asp-area="Admin" asp-controller="SosyalMedya" asp-action="Index" class="btn btn-secondary d-flex align-items-center">
+                                <i class="fas fa-arrow-left me-1"></i> Listeye Dön
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+} 

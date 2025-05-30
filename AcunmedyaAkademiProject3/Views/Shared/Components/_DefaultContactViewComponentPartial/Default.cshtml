@@ -1,8 +1,13 @@
 @model AcunmedyaAkademiProject3.Models.ContactModel
 
 <div class="col-lg-6">
-    <form id="contactForm" action="#" class="php-email-form" data-aos="fade-up" data-aos-delay="200">
+    <form id="contactForm" asp-controller="Default" asp-action="SendContactForm" method="post" data-aos="fade-up" data-aos-delay="200">
         <div class="row gy-4">
+            <div class="col-md-12">
+                 <div class="loading alert alert-info" style="display: none;">Yükleniyor</div>
+                 <div class="error-message alert alert-danger" style="display: none;"></div>
+            </div>
+
             <div class="col-md-6">
                 <input type="text" asp-for="Name" class="form-control" placeholder="Adınız" required>
             </div>
@@ -16,45 +21,92 @@
                 <textarea asp-for="Message" class="form-control" rows="6" placeholder="Mesajınız" required></textarea>
             </div>
             <div class="col-md-12 text-center">
-                <div class="loading" style="display: none;">Yükleniyor</div>
-                <div class="error-message" style="display: none;"></div>
-                <div class="sent-message" style="display: none;">Mesajınız gönderildi. Teşekkürler!</div>
-                <button type="submit">Mesaj Gönder</button>
+                <button id="submitContactFormBtn">Mesaj Gönder</button>
             </div>
         </div>
     </form>
 </div>
 
 @section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <script>
-        document.getElementById('contactForm').addEventListener('submit', function(e) {
-            e.preventDefault();
+        document.getElementById('submitContactFormBtn').addEventListener('click', function(e) {
+            console.log("Submit butonu tıklandı!"); // Debug için eklendi
+            e.preventDefault(); // Varsayılan buton submit işlemini engelle
+            e.stopImmediatePropagation(); // Diğer olay dinleyicilerini durdur
 
-            // Loading mesajını göster
-            const loading = this.querySelector('.loading');
-            const errorMessage = this.querySelector('.error-message');
-            const sentMessage = this.querySelector('.sent-message');
+            const form = document.getElementById('contactForm');
 
-            loading.style.display = 'block';
+            // Form validasyonunu kontrol et (isteğe bağlı ama önerilir)
+            if (!form.reportValidity()) {
+                // Validasyon başarısız olursa dur
+                return;
+            }
+
+            const loading = form.querySelector('.loading');
+            const errorMessage = form.querySelector('.error-message');
+            const submitButton = this; // Butonun kendisi
+
+            // Mesajları gizle
+            loading.style.display = 'none';
             errorMessage.style.display = 'none';
-            sentMessage.style.display = 'none';
 
-            // Form verilerini al
-            const formData = new FormData(this);
+            // Yükleniyor mesajını göster ve butonu devre dışı bırak
+            loading.style.display = 'block';
+            submitButton.disabled = true;
 
-            // Simüle edilmiş gönderme işlemi (2 saniye)
-            setTimeout(() => {
+            const formData = new FormData(form);
+
+            fetch(form.action, {
+                method: form.method,
+                body: formData,
+                headers: {
+                     // ASP.NET Core Anti-Forgery Token'ı ekle (eğer formda varsa)
+                    'RequestVerificationToken': document.querySelector('input[name=__RequestVerificationToken]')?.value
+                }
+            })
+            .then(response => {
+                if (!response.ok) {
+                    // HTTP hata kodu gelirse (örn. 400, 500), hata olarak işle
+                    // JSON olarak yanıt almaya çalış, hata olursa genel mesaj göster
+                    return response.json().catch(() => { throw new Error(`Sunucu hatası: ${response.status}`); });
+                }
+                return response.json();
+            })
+            .then(data => {
+                // Yükleniyor mesajını gizle ve butonu aktif yap
                 loading.style.display = 'none';
-                sentMessage.style.display = 'block';
+                submitButton.disabled = false;
 
-                // Formu temizle
-                this.reset();
+                if (data.success) {
+                    // Başarı durumunda SweetAlert pop-up göster
+                    Swal.fire({
+                        title: 'Başarılı!',
+                        text: 'mesajınız iletildi',
+                        icon: 'success',
+                        confirmButtonText: 'Tamam'
+                    });
 
-                // 3 saniye sonra başarı mesajını gizle
-                setTimeout(() => {
-                    sentMessage.style.display = 'none';
-                }, 3000);
-            }, 2000);
+                    errorMessage.style.display = 'none'; // Başarı durumunda hata mesajını gizle
+                    form.reset(); // Formu temizle
+                } else {
+                    // Hata mesajlarını göster
+                    errorMessage.style.display = 'block';
+                    // data.errors dizisindeki hataları birleştirerek göster
+                    errorMessage.innerHTML = data.errors && data.errors.length > 0 ? data.errors.join('<br>') : 'Mesajınız gönderilirken bir hata oluştu.';
+                }
+            })
+            .catch(error => {
+                // Yükleniyor mesajını gizle ve butonu aktif yap
+                loading.style.display = 'none';
+                submitButton.disabled = false;
+
+                // Hata mesajını göster (genel hata veya HTTP hatası)
+                errorMessage.style.display = 'block';
+                errorMessage.innerHTML = `Mesaj gönderilirken bir hata oluştu: ${error.message}`;
+                console.error('Form gönderme hatası:', error);
+            });
         });
     </script>
 }

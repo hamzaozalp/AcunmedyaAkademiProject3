@@ -1,0 +1,60 @@
+@model AcunmedyaAkademiProject3.Entities.Product
+
+@{
+    ViewData["Title"] = "Yeni Proje Ekle";
+    Layout = "_AdminLayout";
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="card shadow-sm">
+                <div class="card-header">
+                    <h3 class="card-title">Yeni Proje Ekle</h3>
+                </div>
+                <div class="card-body">
+                    <form asp-area="Admin" asp-controller="Projelerim" asp-action="Create" method="post" enctype="multipart/form-data">
+                        <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+
+                        <div class="mb-3">
+                            <label asp-for="ProductName" class="form-label">Proje Adı</label>
+                            <input asp-for="ProductName" class="form-control" />
+                            <span asp-validation-for="ProductName" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="ProductDescription" class="form-label">Açıklama</label>
+                            <textarea asp-for="ProductDescription" class="form-control" rows="3"></textarea>
+                            <span asp-validation-for="ProductDescription" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="CategoryId" class="form-label">Kategori</label>
+                            <select asp-for="CategoryId" class="form-control" asp-items="ViewBag.CategoryId"></select>
+                            <span asp-validation-for="CategoryId" class="text-danger"></span>
+                        </div>
+
+                         <div class="mb-3">
+                            <label asp-for="ProductImageUrl" class="form-label">Resim</label>
+                            <input type="file" name="ProductImageFile" class="form-control" accept="image/*" required />
+                            <span asp-validation-for="ProductImageUrl" class="text-danger"></span>
+                        </div>
+
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <button type="submit" class="btn btn-primary d-flex align-items-center">
+                                <i class="fas fa-save me-1"></i> Kaydet
+                            </button>
+                            <a asp-area="Admin" asp-controller="Projelerim" asp-action="Index" class="btn btn-secondary d-flex align-items-center">
+                                <i class="fas fa-arrow-left me-1"></i> Listeye Dön
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+} 
